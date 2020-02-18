@@ -1,11 +1,9 @@
 package main
 
 import (
-	"github.com/jinzhu/gorm"
 	"github.com/micro/go-micro"
 	pb "github.com/ruandao/micro-shippy-user-service/proto/user"
 	"log"
-	"os"
 )
 
 const (
@@ -18,12 +16,7 @@ func main() {
 	)
 	srv.Init()
 
-	dbUri := os.Getenv("DB_HOST")
-	if dbUri == "" {
-		dbUri = defaultDB
-	}
-
-	db, err := gorm.Open(dbUri, "user")
+	db, err := CreateConnection()
 	if err != nil {
 		log.Fatalf("connect database err: %v", err)
 	}
