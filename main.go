@@ -11,11 +11,6 @@ const (
 )
 
 func main() {
-	srv := micro.NewService(
-		micro.Name("go.micro.srv.user"),
-	)
-	srv.Init()
-
 	db, err := CreateConnection()
 	if err != nil {
 		log.Fatalf("connect database err: %v", err)
@@ -26,6 +21,12 @@ func main() {
 
 	repository := &UserRepository{db}
 	h := &handler{repository}
+	
+	srv := micro.NewService(
+		micro.Name("go.micro.srv.user"),
+	)
+	srv.Init()
+
 	pb.RegisterUserServiceHandler(srv.Server(), h)
 
 	if err := srv.Run(); err != nil {
