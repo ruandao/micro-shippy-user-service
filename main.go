@@ -22,6 +22,8 @@ func main() {
 	}
 	defer db.Close()
 
+	db.AutoMigrate(&User{})
+
 	repository := &UserRepository{db}
 	h := &handler{repository}
 	pb.RegisterUserServiceHandler(srv.Server(), h)
