@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"github.com/jinzhu/gorm"
-	pb "github.com/ruandao/micro-shippy-user-service/proto/user"
+	pb "github.com/ruandao/micro-shippy-user-service/ser/proto/user"
 )
 
 type User struct {
@@ -72,7 +72,7 @@ type Repository interface {
 	GetAll(ctx context.Context) ([]*User, error)
 	Get(ctx context.Context, id string) (*User, error)
 	Create(ctx context.Context, user *pb.User) error
-	GetByEmailAndPassword(ctx context.Context, user *User) (*User, error)
+	GetByEmail(ctx context.Context, email string) (*User, error)
 }
 
 type UserRepository struct {
@@ -86,7 +86,8 @@ func (repo *UserRepository) Create(ctx context.Context, user *pb.User) error {
 	return nil
 }
 
-func (repo *UserRepository) GetByEmailAndPassword(ctx context.Context, user *User) (*User, error) {
+func (repo *UserRepository) GetByEmail(ctx context.Context, email string) (*User, error) {
+	user := &User{Email:email}
 	if err := repo.db.First(&user).Error; err != nil {
 		return nil, err
 	}

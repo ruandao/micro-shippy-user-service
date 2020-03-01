@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/micro/go-micro"
-	pb "github.com/ruandao/micro-shippy-user-service/proto/user"
+	pb "github.com/ruandao/micro-shippy-user-service/ser/proto/user"
 	"log"
 )
 
@@ -20,7 +20,8 @@ func main() {
 	db.AutoMigrate(&User{})
 
 	repository := &UserRepository{db}
-	h := &handler{repository}
+	tokenService := &TokenService{}
+	h := &handler{repository, tokenService}
 	
 	srv := micro.NewService(
 		micro.Name("go.micro.srv.user"),
