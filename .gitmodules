@@ -1,0 +1,6 @@
+[submodule "cli"]
+	path = cli
+	url = git@github.com:ruandao/micro-shippy-user-service-cli.git
+[submodule "ser"]
+	path = ser
+	url = git@github.com:ruandao/micro-shippy-user-service-ser.git
